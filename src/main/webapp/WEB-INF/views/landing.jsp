@@ -15,7 +15,7 @@
                 <form class="hero-signup" action="${base}/register/start" method="post">
                     <ui:csrf/>
                     <label class="sr-only" for="hero-email">Email address</label>
-                    <input id="hero-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="Your email address" required>
+                    <input id="hero-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="Email address" required>
                     <button class="home-button" type="submit">Create account</button>
                 </form>
             </c:otherwise>

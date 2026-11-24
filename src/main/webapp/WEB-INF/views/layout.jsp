@@ -5,7 +5,7 @@
 <c:set var="base" value="${pageContext.request.contextPath}/app" scope="request" />
 <c:set var="assets" value="${pageContext.request.contextPath}/assets" scope="request" />
 <%-- Bump when CSS or JS changes so browsers fetch the new files instead of cached ones. --%>
-<c:set var="assetVersion" value="20261125h" />
+<c:set var="assetVersion" value="20261125m" />
 <c:set var="publicScreen" value="${screen eq 'landing' or screen eq 'auth'}" />
 <c:set var="workspaceScreen" value="${signedIn and not publicScreen}" />
 <!doctype html>
@@ -69,11 +69,17 @@
     <c:when test="${screen eq 'landing'}">
         <header class="home-header" data-motion="header">
             <div class="home-width home-header-content">
-                <a class="home-brand" href="${base}/"><img src="${assets}/app-logo.png" alt="" width="42" height="42">Expense Tracker</a>
-                <nav class="home-navigation" aria-label="About Expense Tracker">
+                <a class="home-brand" href="${base}/"><img src="${assets}/app-logo.png" alt="" width="42" height="42"><span class="home-brand-name">Expense Tracker</span></a>
+                <nav class="home-navigation" id="home-menu" aria-label="About Expense Tracker">
                     <a href="#features">Features</a><a href="#how-it-works">How it works</a>
                     <a href="#security">Privacy</a><a href="#faq">FAQ</a>
+                    <c:if test="${not signedIn}"><a class="home-menu-login" href="${base}/signin">Log in</a></c:if>
                 </nav>
+                <%-- Phones: the section links fold into this menu. landing.js turns it on, so without
+                     scripts the links stay visible on a second row. --%>
+                <button class="home-menu-toggle" type="button" aria-controls="home-menu" aria-expanded="false">
+                    <span class="sr-only">Open menu</span><span class="home-menu-icon" aria-hidden="true"></span>
+                </button>
                 <nav class="home-account" aria-label="Account">
                     <c:choose>
                         <c:when test="${signedIn}"><a class="home-button" href="${base}/dashboard">Open dashboard</a></c:when>

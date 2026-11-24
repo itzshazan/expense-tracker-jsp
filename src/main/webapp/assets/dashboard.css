@@ -247,7 +247,9 @@
     .dashboard-stat-label { gap: .4rem; }
 }
 
-@media (min-width: 791px) and (max-width: 980px), (max-width: 660px) {
+/* Two columns of headline cards whenever four would squeeze their labels: beside the sidebar
+   up to 980px, and on tablets and phones, where the sidebar moves to the top. */
+@media (max-width: 980px) {
     .dashboard-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
@@ -257,14 +259,9 @@
     .dashboard-view .workspace-main, .dashboard-charts { gap: .85rem; }
     .dashboard-metrics { gap: .65rem; }
     .dashboard-panel-heading { gap: .5rem; }
-    .dashboard-recent .number {
-        position: sticky;
-        right: 0;
-        border-left: 1px solid #e4ece7;
-        background: #fff;
-    }
-    .dashboard-recent th.number { background: #f4f7f1; }
-    .dashboard-recent tbody tr:hover .number { background: #f7faf8; }
+    /* Recent expenses are cards here (see app.css); keep them clear of the box edge. */
+    .dashboard-recent .expense-table tr { padding-inline: .85rem; }
+    .dashboard-recent tbody tr:hover { background: none; }
 }
 
 @media (max-width: 400px) {

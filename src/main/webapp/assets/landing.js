@@ -62,4 +62,42 @@ if (header) {
         }
     }, { passive: true });
     update();
+
+    // Phones: fold the section links into a menu button.
+    const toggle = header.querySelector(".home-menu-toggle");
+    const menu = document.getElementById(toggle?.getAttribute("aria-controls"));
+    if (toggle && menu) {
+        const label = toggle.querySelector(".sr-only");
+        const setOpen = open => {
+            header.classList.toggle("is-open", open);
+            toggle.setAttribute("aria-expanded", String(open));
+            label.textContent = open ? "Close menu" : "Open menu";
+            if (open && window.gsap) {
+                gsap.fromTo(menu.children, { autoAlpha: 0, y: -6 }, { autoAlpha: 1, y: 0, stagger: .035, duration: .3, ease: "power2.out", clearProps: "transform" });
+            }
+        };
+        header.classList.add("has-menu");
+        toggle.addEventListener("click", () => setOpen(!header.classList.contains("is-open")));
+        menu.addEventListener("click", event => {
+            if (event.target.closest("a")) {
+                setOpen(false);
+            }
+        });
+        document.addEventListener("click", event => {
+            if (header.classList.contains("is-open") && !header.contains(event.target)) {
+                setOpen(false);
+            }
+        });
+        document.addEventListener("keydown", event => {
+            if (event.key === "Escape" && header.classList.contains("is-open")) {
+                setOpen(false);
+                toggle.focus();
+            }
+        });
+        window.matchMedia("(min-width: 691px)").addEventListener("change", event => {
+            if (event.matches) {
+                setOpen(false);
+            }
+        });
+    }
 }

@@ -97,8 +97,57 @@
     .home-account { grid-column: 2; grid-row: 1; }
 }
 
+/* Phone menu: hidden everywhere until landing.js adds .has-menu below 690px. */
+.home-menu-toggle, .home-menu-login { display: none; }
+.home-menu-toggle {
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 1px solid var(--home-line);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--home-forest);
+}
+.home-menu-toggle:hover { border-color: #b9cdb8; background: #f3f7ef; }
+.home-menu-icon, .home-menu-icon::before, .home-menu-icon::after {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform 200ms ease, background-color 200ms ease;
+}
+.home-menu-icon { position: relative; }
+.home-menu-icon::before, .home-menu-icon::after { position: absolute; left: 0; content: ""; }
+.home-menu-icon::before { top: -6px; }
+.home-menu-icon::after { top: 6px; }
+.home-header.is-open .home-menu-icon { background: transparent; }
+.home-header.is-open .home-menu-icon::before { transform: translateY(6px) rotate(45deg); }
+.home-header.is-open .home-menu-icon::after { transform: translateY(-6px) rotate(-45deg); }
+
 @media (max-width: 690px) {
     .home-header-content { padding-inline: .7rem; }
+
+    .has-menu .home-header-content { grid-template-columns: minmax(0, 1fr) auto auto; gap: 0 .5rem; min-height: 60px; }
+    .has-menu .home-account { grid-column: 2; grid-row: 1; }
+    .has-menu .home-login { display: none; }
+    .has-menu .home-menu-toggle { display: grid; grid-column: 3; grid-row: 1; }
+    .has-menu .home-navigation { display: none; }
+    .has-menu.is-open .home-navigation {
+        display: grid;
+        grid-column: 1 / -1;
+        grid-row: 2;
+        justify-content: stretch;
+        gap: .1rem;
+        margin-top: .55rem;
+        padding: .45rem 0 .2rem;
+        border-top: 1px solid var(--home-line);
+    }
+    .has-menu .home-navigation a { padding: .72rem .6rem; border-radius: 10px; font-size: 1rem; }
+    .has-menu .home-navigation a:hover { background: #f1f6ec; text-decoration: none; }
+    .has-menu .home-menu-login { display: block; }
+    body:has(.has-menu) :is(#features, #how-it-works, #security, #faq) { scroll-margin-top: 6.5rem; }
 }
 
 @media (max-width: 380px) {
@@ -112,6 +161,8 @@
 
 @media (max-width: 350px) {
     .home-header-content { gap: .2rem .35rem; padding-inline: .55rem; }
+    .has-menu .home-header-content { gap: 0 .35rem; }
+    .has-menu .home-menu-toggle { width: 38px; height: 38px; }
     .home-header .home-brand { gap: .24rem; }
     .home-header .home-brand img { width: 28px; height: 28px; }
     .home-account { gap: .38rem; }
