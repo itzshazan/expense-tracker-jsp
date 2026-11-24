@@ -1,0 +1,17 @@
+# Render blueprint: New > Blueprint in the Render dashboard, then pick this repository.
+# Render asks for the values marked sync: false when the service is created; they are not
+# stored in this file.
+services:
+  - type: web
+    name: expense-tracker
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /app/signin
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+# The app's public address comes from RENDER_EXTERNAL_URL, which Render sets. With a
+# custom domain, add EXPENSE_WEB_URL=https://your-domain in the service's Environment tab.

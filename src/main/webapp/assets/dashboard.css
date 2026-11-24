@@ -1,0 +1,333 @@
+.dashboard-view {
+    --dashboard-border: var(--line);
+    --dashboard-text: var(--ink);
+    --dashboard-muted: #52695f;
+    background: var(--background);
+    color: var(--dashboard-text);
+}
+
+.dashboard-view .workspace-main {
+    display: grid;
+    align-content: start;
+    gap: 1.1rem;
+    max-width: 1440px;
+    padding: clamp(1rem, 2.6vw, 2.5rem);
+}
+
+.dashboard-view .notice { margin: 0; }
+
+.dashboard-heading, .dashboard-panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.dashboard-heading { align-items: flex-end; margin: 0 0 .45rem; }
+.dashboard-eyebrow {
+    margin: 0 0 .3rem;
+    color: var(--green);
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+.dashboard-heading h1 { margin: 0; font-size: clamp(2.1rem, 3.2vw, 2.85rem); line-height: 1.05; }
+.dashboard-subtitle { margin: .4rem 0 0; color: var(--dashboard-muted); font-size: .95rem; }
+
+.dashboard-heading .button {
+    flex: none;
+    gap: .45rem;
+    padding-inline: .95rem 1.1rem;
+    border-radius: 999px;
+    background: var(--forest);
+    box-shadow: 0 6px 16px #12362b26;
+    white-space: nowrap;
+}
+.dashboard-heading .button:hover { background: #1d4d3c; }
+.dashboard-heading .button span { font-size: 1.3rem; line-height: 1; }
+
+.dashboard-metrics, .dashboard-charts { display: grid; gap: 1rem; }
+.dashboard-metrics { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.dashboard-charts { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+
+.dashboard-stat, .dashboard-panel {
+    min-width: 0;
+    border: 1px solid var(--dashboard-border);
+    border-radius: var(--radius);
+    background: #fff;
+    box-shadow: 0 1px 2px #12362b0a, 0 4px 14px #12362b08;
+}
+
+.dashboard-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.1rem 1.2rem;
+}
+
+.dashboard-stat-primary {
+    position: relative;
+    overflow: hidden;
+    border-color: var(--forest);
+    background: radial-gradient(circle at 110% -20%, #2f7a5c 0, transparent 55%), var(--forest);
+    color: #fff;
+    box-shadow: 0 8px 22px #12362b33;
+}
+
+.dashboard-stat-label {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    color: var(--dashboard-muted);
+    font-size: .85rem;
+    font-weight: 650;
+    line-height: 1.25;
+}
+.dashboard-stat-primary .dashboard-stat-label { color: #d4e8dc; }
+
+.dashboard-stat-icon {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: #e9f2e3;
+    color: var(--green);
+    font-size: 1.05rem;
+}
+.dashboard-stat-primary .dashboard-stat-icon { background: #ffffff1a; color: var(--lime); }
+
+.dashboard-stat strong {
+    margin-top: .9rem;
+    font-size: clamp(1.35rem, 2.4vw, 2.1rem);
+    font-weight: 720;
+    line-height: 1.1;
+    letter-spacing: -.035em;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-stat > span { margin-top: .3rem; color: var(--dashboard-muted); font-size: .8rem; }
+.dashboard-stat-primary > span { color: #b9d3c3; }
+
+.dashboard-panel { padding: clamp(.95rem, 1.75vw, 1.45rem); }
+.dashboard-panel-heading { margin-bottom: 1.15rem; }
+.dashboard-panel-heading h2 { margin: 0; font-size: 1.08rem; letter-spacing: -.015em; }
+.dashboard-panel-heading p { margin: .15rem 0 0; color: var(--dashboard-muted); font-size: .85rem; }
+.dashboard-panel-heading a {
+    flex: none;
+    font-size: .84rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.dashboard-panel-heading a:hover { text-decoration: underline; }
+.dashboard-panel-heading a span { margin-left: .2rem; }
+
+.trend-chart, .dashboard-categories { margin: 0; padding: 0; list-style: none; }
+.trend-chart {
+    --plot-height: 8.3rem;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    padding-top: .55rem;
+    gap: clamp(.15rem, 1vw, .85rem);
+    text-align: center;
+    background: repeating-linear-gradient(to top, #dce9e1 0 1px, transparent 1px 25%)
+        center bottom 1.75rem / 100% var(--plot-height) no-repeat;
+}
+
+.trend-chart > li { display: grid; grid-template-rows: auto var(--plot-height) 1.75rem; min-width: 0; }
+.trend-chart strong {
+    align-self: end;
+    padding-bottom: .36rem;
+    font-size: clamp(.69rem, 1.1vw, .85rem);
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+/* Each week shows two bars: last month (pale, left) and this month (green, right).
+   They are rotated <progress> elements because the CSP does not allow inline heights. */
+.trend-track { --bar: clamp(.7rem, 2.1vw, 1.35rem); position: relative; }
+.trend-track progress {
+    appearance: none;
+    position: absolute;
+    top: 50%;
+    width: var(--plot-height);
+    height: var(--bar);
+    margin: 0;
+    border-radius: 0;
+    background: transparent;
+    transform: translate(-50%, -50%) rotate(-90deg);
+}
+.trend-track .trend-previous { left: calc(50% - var(--bar) / 2 - 2px); }
+.trend-track .trend-current { left: calc(50% + var(--bar) / 2 + 2px); }
+.trend-track progress::-webkit-progress-bar { background: transparent; }
+.trend-track progress::-webkit-progress-value { border-radius: 0 6px 6px 0; background: linear-gradient(to right, #267354, #4b9f75); }
+.trend-track progress::-moz-progress-bar { border-radius: 0 6px 6px 0; background: linear-gradient(to right, #267354, #4b9f75); }
+.trend-track .trend-previous::-webkit-progress-value { background: #cfe0d3; }
+.trend-track .trend-previous::-moz-progress-bar { background: #cfe0d3; }
+
+/* Weeks that have not started: a dashed outline where this month's bar will go. */
+.is-upcoming strong { color: #8aa197; font-weight: 600; }
+.is-upcoming .trend-track::after {
+    position: absolute;
+    bottom: 0;
+    left: calc(50% + 2px);
+    width: var(--bar);
+    height: 22%;
+    border: 1.5px dashed #b9cfc1;
+    border-bottom: 0;
+    border-radius: 6px 6px 0 0;
+    content: "";
+}
+
+.trend-chart li > span { padding-top: .47rem; color: var(--dashboard-muted); font-size: .79rem; }
+.trend-legend {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .4rem;
+    margin: .6rem 0 0;
+    color: var(--dashboard-muted);
+    font-size: .78rem;
+}
+.trend-legend span { width: 10px; height: 10px; border-radius: 3px; }
+.trend-legend .legend-current { background: #2f8460; }
+.trend-legend .legend-previous { margin-left: .8rem; background: #cfe0d3; }
+
+.dashboard-categories { display: grid; gap: .77rem; }
+.category-details { display: flex; justify-content: space-between; align-items: baseline; gap: .6rem; font-size: .88rem; }
+.category-details span, .category-details strong { overflow-wrap: anywhere; }
+.category-details strong { flex: none; max-width: 48%; text-align: right; font-variant-numeric: tabular-nums; }
+.dashboard-categories progress {
+    display: block;
+    margin: .31rem 0 0;
+    height: .49rem;
+}
+.dashboard-categories li:nth-child(even) progress::-webkit-progress-value { background: #4c8e71; }
+.dashboard-categories li:nth-child(even) progress::-moz-progress-bar { background: #4c8e71; }
+
+.dashboard-empty {
+    margin: 0;
+    padding: .85rem 1rem;
+    border: 1px dashed #c9ddd1;
+    border-radius: 12px;
+    background: #f6faf7;
+    color: var(--dashboard-muted);
+    font-size: .91rem;
+}
+
+.dashboard-panel .budget {
+    padding: .85rem .95rem;
+    border-radius: 12px;
+    background: #f7faf8;
+}
+.dashboard-panel .budget > div { flex-wrap: wrap; }
+.dashboard-panel .budget > div:first-child > span {
+    padding: .15rem .55rem;
+    border-radius: 99px;
+    background: #e6f4eb;
+    color: #255b41;
+    font-size: .76rem;
+    font-weight: 680;
+}
+.dashboard-panel .budget.warning > div:first-child > span { background: #fbefde; color: #774918; }
+.dashboard-panel .budget.exceeded > div:first-child > span { background: #fae9e6; color: #8e3028; }
+
+.dashboard-recent .table-scroll { border: 1px solid #e4ece7; border-radius: 12px; }
+.dashboard-recent :is(th, td) { padding: .79rem .85rem; }
+.dashboard-recent .number { padding-right: 1rem; }
+.dashboard-recent tbody tr:hover { background: #f7faf8; }
+
+@media (max-width: 1100px) {
+    .dashboard-stat { padding-inline: .9rem; }
+    .dashboard-stat-label { gap: .4rem; }
+}
+
+@media (min-width: 791px) and (max-width: 980px), (max-width: 660px) {
+    .dashboard-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 630px) {
+    .dashboard-heading { flex-wrap: wrap; }
+    .dashboard-charts { grid-template-columns: minmax(0, 1fr); }
+    .dashboard-view .workspace-main, .dashboard-charts { gap: .85rem; }
+    .dashboard-metrics { gap: .65rem; }
+    .dashboard-panel-heading { gap: .5rem; }
+    .dashboard-recent .number {
+        position: sticky;
+        right: 0;
+        border-left: 1px solid #e4ece7;
+        background: #fff;
+    }
+    .dashboard-recent th.number { background: #f4f7f1; }
+    .dashboard-recent tbody tr:hover .number { background: #f7faf8; }
+}
+
+@media (max-width: 400px) {
+    .dashboard-stat { padding: .75rem; }
+    .dashboard-stat-icon { width: 28px; height: 28px; font-size: .9rem; }
+    .dashboard-panel-heading a { font-size: .77rem; }
+}
+
+/* Cards lift slightly on hover. */
+.dashboard-stat { transition: transform 200ms ease, box-shadow 200ms ease; }
+.dashboard-stat:hover { transform: translateY(-2px); box-shadow: 0 2px 4px #12362b0d, 0 10px 24px #12362b14; }
+.dashboard-stat-primary:hover { box-shadow: 0 12px 28px #12362b40; }
+
+/* Headline cards: change against last month and budget state */
+.dashboard-stat > span em { font-style: normal; font-weight: 700; }
+.dashboard-stat > span em.is-over { color: #9a4a1c; }
+.dashboard-stat > span em.is-under { color: var(--green); }
+.stat-change { font-weight: 650; }
+.dashboard-stat-primary .stat-change-up { color: #f4d28e; }
+.dashboard-stat-primary .stat-change-down { color: var(--lime); }
+.dashboard-stat.stat-warning { border-color: #ecd2a6; background: linear-gradient(#fffaf0, #fff 60%); }
+.dashboard-stat.stat-warning strong { color: #8a5a17; }
+.dashboard-stat.stat-exceeded { border-color: #ebc1ba; background: linear-gradient(#fff4f2, #fff 60%); }
+.dashboard-stat.stat-exceeded strong { color: #9a3128; }
+.dashboard-stat-empty strong { color: #9db0a5; }
+.dashboard-stat-empty a { margin-top: .3rem; font-size: .82rem; font-weight: 700; text-decoration: none; }
+.dashboard-stat-empty a:hover { text-decoration: underline; }
+
+/* Budgets: what is left, and a coloured edge on the ones that need attention */
+.budget-remaining { font-weight: 700; color: var(--ink); }
+.dashboard-panel .budget.warning { box-shadow: inset 3px 0 #d39a3c; }
+.dashboard-panel .budget.exceeded { box-shadow: inset 3px 0 #c2453a; }
+.dashboard-panel .budget.exceeded .budget-remaining { color: #9a3128; }
+
+/* Categories: share and change */
+.category-meta { display: flex; justify-content: space-between; gap: .6rem; margin-top: .3rem; color: var(--dashboard-muted); font-size: .77rem; }
+.category-change { font-weight: 650; }
+.category-change-up { color: #9a4a1c; }
+.category-change-down { color: var(--green); }
+
+/* Receipt reminder above the recent expenses */
+.receipt-nudge {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    margin: 0 0 1rem;
+    padding: .75rem .9rem;
+    border: 1px solid #ecd9b4;
+    border-radius: 12px;
+    background: #fffaf0;
+    color: #6b4a16;
+    font-size: .88rem;
+    text-decoration: none;
+}
+.receipt-nudge:hover { border-color: #ddbb7c; color: #6b4a16; }
+.receipt-nudge .dashboard-stat-icon { background: #f8ead0; color: #8a5a17; }
+.receipt-nudge strong { color: #5a3d10; }
+.receipt-nudge-action { margin-left: auto; font-weight: 700; white-space: nowrap; }
+
+/* The header already has "Add expense"; the sidebar shortcut would repeat it here. */
+.dashboard-view .sidebar-cta { display: none; }
+
+@media (max-width: 630px) {
+    .receipt-nudge { align-items: flex-start; flex-wrap: wrap; }
+    .receipt-nudge-action { margin-left: 0; }
+}
