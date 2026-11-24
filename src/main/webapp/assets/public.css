@@ -97,6 +97,9 @@
     .home-account { grid-column: 2; grid-row: 1; }
 }
 
+/* Signed-in header button: "Open dashboard", shortened to "Dashboard" on phones. */
+.home-label-short { display: none; }
+
 /* Phone menu: hidden everywhere until landing.js adds .has-menu below 690px. */
 .home-menu-toggle, .home-menu-login { display: none; }
 .home-menu-toggle {
@@ -128,6 +131,12 @@
 
 @media (max-width: 690px) {
     .home-header-content { padding-inline: .7rem; }
+    .home-label-long { display: none; }
+    .home-label-short { display: inline; }
+    .home-account .home-dashboard-link { padding-inline: .95rem; }
+    /* The brand gives way to the buttons instead of running underneath them. */
+    .home-header .home-brand { min-width: 0; max-width: 100%; }
+    .home-header .home-brand-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 
     .has-menu .home-header-content { grid-template-columns: minmax(0, 1fr) auto auto; gap: 0 .5rem; min-height: 60px; }
     .has-menu .home-account { grid-column: 2; grid-row: 1; }
@@ -150,6 +159,13 @@
     body:has(.has-menu) :is(#features, #how-it-works, #security, #faq) { scroll-margin-top: 6.5rem; }
 }
 
+/* Signed in on a narrow phone: the logo alone, so the dashboard button and menu fit. */
+@media (max-width: 340px) {
+    .home-header-content:has(.home-dashboard-link) .home-brand-name {
+        position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+    }
+}
+
 @media (max-width: 380px) {
     .home-brand { font-size: .92rem; }
     .home-brand img { width: 34px; height: 34px; }
@@ -157,6 +173,11 @@
     .home-account .home-button { padding-inline: .66rem; }
     .home-navigation { gap: .82rem; }
     .home-navigation a { font-size: .84rem; }
+    /* Tighter header so the brand name still fits beside the buttons on 360px phones. */
+    .has-menu .home-header-content { gap: 0 .35rem; padding-inline: .5rem; }
+    .home-header .home-brand { gap: .4rem; }
+    .has-menu .home-menu-toggle { width: 40px; height: 40px; }
+    .home-account .home-dashboard-link { font-size: .86rem; }
 }
 
 @media (max-width: 350px) {

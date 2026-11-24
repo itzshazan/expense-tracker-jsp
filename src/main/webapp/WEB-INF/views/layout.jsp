@@ -5,7 +5,7 @@
 <c:set var="base" value="${pageContext.request.contextPath}/app" scope="request" />
 <c:set var="assets" value="${pageContext.request.contextPath}/assets" scope="request" />
 <%-- Bump when CSS or JS changes so browsers fetch the new files instead of cached ones. --%>
-<c:set var="assetVersion" value="20261125m" />
+<c:set var="assetVersion" value="20261125n" />
 <c:set var="publicScreen" value="${screen eq 'landing' or screen eq 'auth'}" />
 <c:set var="workspaceScreen" value="${signedIn and not publicScreen}" />
 <!doctype html>
@@ -82,7 +82,7 @@
                 </button>
                 <nav class="home-account" aria-label="Account">
                     <c:choose>
-                        <c:when test="${signedIn}"><a class="home-button" href="${base}/dashboard">Open dashboard</a></c:when>
+                        <c:when test="${signedIn}"><a class="home-button home-dashboard-link" href="${base}/dashboard"><span class="home-label-long">Open dashboard</span><span class="home-label-short">Dashboard</span></a></c:when>
                         <c:otherwise>
                             <a class="home-login" href="${base}/signin">Log in</a>
                             <a class="home-button" href="${base}/register">Sign up</a>
